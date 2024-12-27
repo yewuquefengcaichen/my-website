@@ -1,0 +1,340 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author：Wangdali
+# python实现：贪吃蛇
+
+'''
+游戏玩法：回车开始游戏；空格暂停游戏/继续游戏；方向键/wsad控制小蛇走向
+'''
+'''
+思路：用列表存储蛇的身体；用浅色表示身体，深色背景将身体凸显出来；
+蛇的移动：仔细观察，是：身体除头和尾不动、尾部消失，头部增加，所以，新添加的元素放在列表头部、删除尾部元素；
+游戏结束判定策略：超出边界；触碰到自己的身体：蛇前进的下一格子为身体的一部分（即在列表中）。
+'''
+# 注：因为在列表中需要频繁添加和删除元素，所以用deque容器代替列表；是因为deque具有高效的插入和删除效率
+
+# 导包
+import random  # 生成随机食物位置
+import sys     # 处理系统相关操作
+import time    # time模块用于获取当前时间（用于控制蛇的移动速度）
+import pygame
+from pygame.locals import *
+from collections import deque
+import json
+import os
+
+# 基础设置
+Screen_Height = 480
+Screen_Width = 600
+Size = 20  # 小方格大小
+Line_Width = 1
+# 游戏区域的坐标范围
+Area_x = (0, Screen_Width // Size - 1)  # 0是左边界，1是右边界
+Area_y = (2, Screen_Height // Size - 1)
+# 食物的初步设置
+# 食物的分值+颜色
+Food_Style_List = [(10, (255, 100, 100)), (20, (100, 255, 100)), (30, (100, 100, 255))]
+# 整体颜色设置，Food_Style_List定义了不同类型食物的分值和颜色组合。
+Light = (100, 100, 100)
+Dark = (200, 200, 200)
+Black = (0, 0, 0)
+Red = (200, 30, 30)
+Back_Ground = (40, 40, 60)
+
+# 按钮设置
+BUTTON_WIDTH = 100
+BUTTON_HEIGHT = 40
+BUTTON_COLOR = (70, 130, 180)  # 钢蓝色
+BUTTON_HOVER_COLOR = (100, 149, 237)  # 矢车菊蓝
+BUTTON_TEXT_COLOR = (255, 255, 255)
+BUTTON_POSITION = (Screen_Width - BUTTON_WIDTH - 10, 10)  # 右上角，距右边缘10px，顶部10px
+
+# 历史记录文件
+HISTORY_FILE = 'snake_game_history.json'
+
+# 文本输出格式设置
+def Print_Txt(screen, font, x, y, text, fcolor=(255, 255, 255)):
+    """
+    在屏幕上打印文本
+    :param screen: Pygame屏幕对象
+    :param font: 字体对象
+    :param x: x坐标
+    :param y: y坐标
+    :param text: 显示的文本
+    :param fcolor: 字体颜色
+    """
+    Text = font.render(text, True, fcolor)
+    screen.blit(Text, (x, y))
+
+# 初始化蛇
+def init_snake():
+    """
+    初始化蛇的位置和长度
+    :return: deque类型的蛇
+    """
+    snake = deque()
+    snake.append((2, Area_y[0]))
+    snake.append((1, Area_y[0]))
+    snake.append((0, Area_y[0]))
+    return snake
+
+# 食物设置
+def Creat_Food(snake):
+    """
+    随机生成食物的位置，确保不生成在蛇身上
+    :param snake: 当前蛇的身体坐标
+    :return: 食物的坐标 (x, y)
+    """
+    food_x = random.randint(Area_x[0], Area_x[1])
+    food_y = random.randint(Area_y[0], Area_y[1])
+    # 如果食物出现在蛇上，重新生成
+    while (food_x, food_y) in snake:
+        food_x = random.randint(Area_x[0], Area_x[1])
+        food_y = random.randint(Area_y[0], Area_y[1])
+    return food_x, food_y
+
+# 食物风格
+def Food_Style():
+    """
+    随机选择食物的分值和颜色
+    :return: tuple (分值, 颜色)
+    """
+    return Food_Style_List[random.randint(0, 2)]  # 返回随机的分值和颜色
+
+# 加载历史记录
+def load_history():
+    """
+    加载历史游戏记录
+    :return: 历史记录列表
+    """
+    if not os.path.exists(HISTORY_FILE):
+        return []  # 如果没有历史记录文件，返回空列表
+    
+    with open(HISTORY_FILE, 'r') as f:
+        try:
+            history = json.load(f)
+            return history
+        except json.JSONDecodeError:
+            return []
+
+# 保存游戏数据
+def save_game(current_score, current_survival_time):
+    """
+    保存当前游戏数据到历史记录文件
+    :param current_score: 当前得分
+    :param current_survival_time: 当前生存时间（秒）
+    """
+    history = load_history()
+    
+    # 更新历史记录
+    history.append({
+        'score': current_score,
+        'survival_time': current_survival_time,
+        'timestamp': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+    })
+    
+    # 将更新后的历史记录写入文件
+    with open(HISTORY_FILE, 'w') as f:
+        json.dump(history, f, indent=4)
+    
+    print("游戏数据已成功保存。")
+
+# 获取最高分
+def get_high_score(history):
+    """
+    从历史记录中获取最高分
+    :param history: 历史记录列表
+    :return: 最高分
+    """
+    if not history:
+        return 0
+    return max(entry['score'] for entry in history)
+
+# 画按钮
+def draw_button(screen, font, position, width, height, text, color, hover_color, text_color):
+    """
+    在屏幕上绘制按钮，并检测是否被点击
+    :param screen: Pygame屏幕对象
+    :param font: 字体对象
+    :param position: 按钮位置 (x, y)
+    :param width: 按钮宽度
+    :param height: 按钮高度
+    :param text: 按钮文本
+    :param color: 按钮默认颜色
+    :param hover_color: 按钮悬停时颜色
+    :param text_color: 按钮文本颜色
+    :return: 如果按钮被点击，返回True；否则返回False
+    """
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    
+    rect = pygame.Rect(position[0], position[1], width, height)
+    
+    if rect.collidepoint(mouse):
+        pygame.draw.rect(screen, hover_color, rect)
+        if click[0] == 1:
+            return True
+    else:
+        pygame.draw.rect(screen, color, rect)
+    
+    # 渲染按钮文本
+    text_surface = font.render(text, True, text_color)
+    text_rect = text_surface.get_rect(center=rect.center)
+    screen.blit(text_surface, text_rect)
+    
+    return False
+
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((Screen_Width, Screen_Height))  # 初始化一个准备显示的窗口或屏幕
+    pygame.display.set_caption('贪吃蛇')  # 设置窗口标题
+    # 得分字体设置
+    font1 = pygame.font.SysFont('SimHei', 24)
+    # 游戏结束字体设置
+    font2 = pygame.font.SysFont(None, 72)
+    fwidth, fheight = font2.size('GAME OVER')  # 获取“GAME OVER”文本的宽度和高度
+    # b变量用于防止快速按键导致的错误方向
+    b = True
+    # 初始化蛇
+    snake = init_snake()
+    # 初始化食物
+    food = Creat_Food(snake)
+    food_style = Food_Style()
+    # 方向控制，初始向右移动
+    pos = (1, 0)
+    # 游戏相关变量初始化
+    game_over = True  # 结束标志，初始为True显示“GAME OVER”
+    game_start = False  # 开始标志
+    score = 0  # 得分
+    orispeed = 0.3  # 蛇初始速度（秒）
+    speed = orispeed  # 当前速度
+    last_move_time = None  # 上一次移动时间
+    pause = False  # 暂停标志
+    start_time = None  # 生存时间开始时间
+    # 加载历史记录
+    history = load_history()
+    
+    # 初始化按钮字体
+    button_font = pygame.font.SysFont('SimHei', 20)
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                sys.exit()
+            elif event.type == KEYDOWN:
+                if event.key == K_RETURN:
+                    if game_over:
+                        game_start = True
+                        game_over = False
+                        b = True
+                        snake = init_snake()
+                        food = Creat_Food(snake)
+                        food_style = Food_Style()
+                        pos = (1, 0)
+                        # 重置得分和速度
+                        score = 0
+                        speed = orispeed
+                        last_move_time = time.time()
+                        start_time = time.time()  # 开始计时
+                elif event.key == K_SPACE:
+                    if not game_over:
+                        pause = not pause  # 切换暂停状态
+                # 方向键控制
+                elif event.key in (K_UP, K_w):
+                    if b and not pos[1]:
+                        pos = (0, -1)
+                        b = False
+                elif event.key in (K_DOWN, K_s):
+                    if b and not pos[1]:
+                        pos = (0, 1)
+                        b = False
+                elif event.key in (K_LEFT, K_a):
+                    if b and not pos[0]:
+                        pos = (-1, 0)
+                        b = False
+                elif event.key in (K_RIGHT, K_d):
+                    if b and not pos[0]:
+                        pos = (1, 0)
+                        b = False
+            # 通过pygame.event.get获取所有的游戏事件。
+            # 当事件类型为QUIT时，调用sys.exit退出游戏。
+        
+        # 填充背景色
+        screen.fill(Back_Ground)
+        
+        # 画网格线、竖线
+        for x in range(Size, Screen_Width, Size):
+            pygame.draw.line(screen, Black, (x, Area_y[0] * Size), (x, Screen_Height), Line_Width)
+        # 画网格线、横线
+        for y in range(Area_y[0] * Size, Screen_Height, Size):
+            pygame.draw.line(screen, Black, (0, y), (Screen_Width, y), Line_Width)
+        
+        # 蛇的移动逻辑
+        if not game_over:
+            curTime = time.time()
+            if curTime - last_move_time > speed:
+                if not pause:
+                    b = True
+                    last_move_time = curTime
+                    # 计算蛇头下一步的位置
+                    next_s = (snake[0][0] + pos[0], snake[0][1] + pos[1])
+                    # 如果吃到了食物
+                    if next_s == food:
+                        snake.appendleft(next_s)
+                        score += food_style[0]
+                        # 提高速度，最小速度为0.05秒
+                        speed = max(0.05, orispeed - 0.03 * (score // 100))
+                        # 生成新的食物
+                        food = Creat_Food(snake)
+                        food_style = Food_Style()
+                    else:
+                        # 判断是否在游戏区域内且未碰到自己
+                        if (Area_x[0] <= next_s[0] <= Area_x[1] and
+                            Area_y[0] <= next_s[1] <= Area_y[1] and
+                            next_s not in snake):
+                            snake.appendleft(next_s)
+                            snake.pop()
+                        else:
+                            game_over = True
+                            game_start = False
+                            # 游戏结束后自动保存
+                            if start_time:
+                                current_survival_time = int(time.time() - start_time)
+                                save_game(score, current_survival_time)
+        
+        # 画食物
+        if not game_over:
+            pygame.draw.rect(screen, food_style[1], (food[0] * Size, food[1] * Size, Size, Size), 0)
+        # 画蛇
+        for s in snake:
+            pygame.draw.rect(screen, Dark, (s[0] * Size + Line_Width, s[1] * Size + Line_Width,
+                                            Size - Line_Width * 2, Size - Line_Width * 2), 0)
+        # 显示速度、得分和生存时间
+        Print_Txt(screen, font1, 30, 7, f'速度: {score // 100}')
+        Print_Txt(screen, font1, 450, 7, f'得分: {score}')
+        if not game_over and game_start and start_time:
+            current_survival_time = int(time.time() - start_time)
+            Print_Txt(screen, font1, 150, 7, f'生存时间: {current_survival_time} 秒')
+        
+        # 显示最高分
+        high_score = get_high_score(history)
+        Print_Txt(screen, font1, 300, 7, f'最高分: {high_score}')
+        
+        # 绘制保存按钮
+        if draw_button(screen, button_font, BUTTON_POSITION, BUTTON_WIDTH, BUTTON_HEIGHT, '保存游戏',
+                      BUTTON_COLOR, BUTTON_HOVER_COLOR, BUTTON_TEXT_COLOR):
+            if game_start and not game_over and start_time:
+                current_survival_time = int(time.time() - start_time)
+                save_game(score, current_survival_time)
+        
+        # 画“GAME OVER”文字
+        if game_over:
+            if game_start:
+                Print_Txt(screen, font2, (Screen_Width - fwidth) // 2, (Screen_Height - fheight) // 2, 'GAME OVER', Red)
+        
+        # 更新显示
+        pygame.display.update()
+
+if __name__ == '__main__':
+    main()
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

@@ -1,0 +1,326 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate__fadeIn {
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+@keyframes blink-caret {
+
+  from,
+  to {
+    border-color: transparent
+  }
+
+  50% {
+    border-color: var(--primary-color)
+  }
+}
+
+@keyframes float-animation {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+.float-item {
+  animation: float-animation 6s ease-in-out infinite;
+}
+
+.float-item:nth-child(2) {
+  animation-delay: -2s;
+}
+
+.float-item:nth-child(3) {
+  animation-delay: -4s;
+}
+
+/* 春节动画 */
+@keyframes swing {
+
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* 页面切换动画 */
+.page-transition {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* 鼠标悬停动画 */
+.hover-float {
+  transition: transform 0.3s ease;
+}
+
+.hover-float:hover {
+  transform: translateY(-5px);
+}
+
+/* 打字机效果 */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--primary-color);
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end),
+    blink-caret 0.75s step-end infinite;
+}
+
+/* 春节装饰动画 */
+@keyframes lanternGlow {
+
+  0%,
+  100% {
+    filter: drop-shadow(var(--lantern-glow));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 30px rgba(255, 77, 79, 0.8));
+  }
+}
+
+@keyframes coupletShine {
+  0% {
+    border-color: var(--spring-gold);
+  }
+
+  50% {
+    border-color: #fff;
+  }
+
+  100% {
+    border-color: var(--spring-gold);
+  }
+}
+
+/* 应用动画 */
+.lantern {
+  animation: swing 3s ease-in-out infinite,
+    lanternGlow 2s ease-in-out infinite;
+}
+
+.couplet {
+  animation: coupletShine 3s ease-in-out infinite;
+}
+
+/* 页面载入动画 */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 交互画 */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-rotate {
+  transition: transform 0.3s ease;
+}
+
+.hover-rotate:hover {
+  transform: rotate(5deg);
+}
+
+/* 红包动画 */
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-5deg);
+  }
+
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* 福字动画 */
+@keyframes rotateFu {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fu-character {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  background: url('../assets/fu.png') no-repeat;
+  background-size: contain;
+  animation: rotateFu 10s linear infinite;
+}
+
+.fu-character.top {
+  top: 100px;
+  right: 50px;
+}
+
+.fu-character.bottom {
+  bottom: 100px;
+  left: 50px;
+}
+
+/* 音乐旋转动画 */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 飘雪效果 */
+@keyframes snowfall {
+  0% {
+    transform: translateY(-100%) rotate(0deg);
+  }
+
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+.snowflake {
+  position: fixed;
+  color: #fff;
+  font-size: 1.5em;
+  animation: snowfall linear infinite;
+  z-index: 98;
+  pointer-events: none;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* 弹幕动画 */
+@keyframes danmaku-move {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-200vw);
+  }
+}
+
+.danmaku {
+  animation: danmaku-move linear forwards;
+}
+
+/* 平滑过渡效果 */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 悬浮效果优化 */
+.hover-effect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-effect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 卡片动画优化 */
+.nav-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}

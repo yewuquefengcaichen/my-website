@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>博客 - 个人空间</title>
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/animations.css" rel="stylesheet">
+  <link href="css/blog.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 自定义光标 -->
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
+
+  <!-- 背景 -->
+  <div class="bg-container">
+    <div class="bg-overlay"></div>
+    <div class="bg-slides">
+      <img src="https://api.dujin.org/bing/1920.php" alt="背景图片">
+    </div>
+  </div>
+
+  <!-- 导航栏 -->
+  <nav class="main-nav">
+    <div class="nav-content">
+      <a href="index.html" class="nav-logo">首页</a>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="about.html">关于</a>
+        <a href="projects.html">项目</a>
+        <a href="blog.html" class="active">博客</a>
+        <a href="contact.html">联系</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容 -->
+  <main class="main-content">
+    <div class="blog-container">
+      <h1 class="page-title">技术博客</h1>
+
+      <!-- 博客分类和搜索 -->
+      <div class="blog-header">
+        <div class="blog-categories">
+          <button class="category-btn active" data-category="all">全部</button>
+          <button class="category-btn" data-category="frontend">前端</button>
+          <button class="category-btn" data-category="backend">后端</button>
+          <button class="category-btn" data-category="other">其他</button>
+        </div>
+        <div class="blog-search">
+          <input type="text" placeholder="搜索文章..." id="search-input">
+        </div>
+      </div>
+
+      <!-- 博客列表 -->
+      <div class="blog-grid">
+        <!-- 博客卡片 1 -->
+        <article class="blog-card" data-category="frontend">
+          <div class="blog-image">
+            <img src="assets/blog/react-best-practices.jpg" alt="React最佳实践">
+            <div class="blog-date">2024-03-20</div>
+          </div>
+          <div class="blog-content">
+            <div class="blog-tags">
+              <span>JavaScript</span>
+              <span>React</span>
+              <span>性能优化</span>
+            </div>
+            <h2>现代前端开发实践指南</h2>
+            <p>深入探讨React组件设计模式、状态管理策略、性能优化技巧，以及如何构建可维护的大型应用...</p>
+            <a href="#" class="read-more">阅读更多</a>
+          </div>
+        </article>
+
+        <!-- 博客卡片 2 -->
+        <article class="blog-card" data-category="backend">
+          <div class="blog-image">
+            <img src="assets/blog/node-performance.jpg" alt="Node.js性能优化">
+            <div class="blog-date">2024-03-18</div>
+          </div>
+          <div class="blog-content">
+            <div class="blog-tags">
+              <span>Node.js</span>
+              <span>数据库</span>
+              <span>性能优化</span>
+            </div>
+            <h2>Node.js性能调优技巧</h2>
+            <p>从内存管理、垃圾回收、异步I/O到集群部署，全方位提升Node.js应用性能...</p>
+            <a href="#" class="read-more">阅读更多</a>
+          </div>
+        </article>
+
+        <!-- 博客卡片 3 -->
+        <article class="blog-card" data-category="other">
+          <div class="blog-image">
+            <img src="assets/blog/ai-development.jpg" alt="AI开发实践">
+            <div class="blog-date">2024-03-15</div>
+          </div>
+          <div class="blog-content">
+            <div class="blog-tags">
+              <span>AI</span>
+              <span>机器学习</span>
+              <span>Python</span>
+            </div>
+            <h2>AI开发实战经验分享</h2>
+            <p>分享在实际项目中应用机器学习的经验，包括模型选择、数据处理、部署优化等...</p>
+            <a href="#" class="read-more">阅读更多</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- 分页 -->
+      <div class="blog-pagination">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span>...</span>
+        <button class="page-btn">10</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Copyright © 2024 冯锡航 & Made by <span>FengXihang</span></p>
+  </footer>
+
+  <script src="js/cursor.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/hearts.js"></script>
+  <script src="js/blog.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>联系 - 个人空间</title>
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/animations.css" rel="stylesheet">
+  <link href="css/contact.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 自定义光标 -->
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
+
+  <!-- 背景 -->
+  <div class="bg-container">
+    <div class="bg-overlay"></div>
+    <div class="bg-slides">
+      <img src="https://api.dujin.org/bing/1920.php" alt="背景图片">
+    </div>
+  </div>
+
+  <!-- 春节装饰 -->
+  <div class="spring-festival">
+    <div class="lantern left"></div>
+    <div class="lantern right"></div>
+    <div class="firecracker left"></div>
+    <div class="firecracker right"></div>
+  </div>
+
+  <!-- 导航栏 -->
+  <nav class="main-nav">
+    <div class="nav-content">
+      <a href="index.html" class="nav-logo">首页</a>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="about.html">关于</a>
+        <a href="projects.html">项目</a>
+        <a href="blog.html">博客</a>
+        <a href="contact.html" class="active">联系</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容 -->
+  <main class="main-content">
+    <div class="contact-container">
+      <h1 class="page-title">与我联系</h1>
+
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="contact-card">
+            <div class="card-icon">📧</div>
+            <h3>邮箱</h3>
+            <p>example@email.com</p>
+          </div>
+
+          <div class="contact-card">
+            <div class="card-icon">💬</div>
+            <h3>社交媒体</h3>
+            <div class="social-links">
+              <a href="#" target="_blank">GitHub</a>
+              <a href="#" target="_blank">微博</a>
+              <a href="#" target="_blank">知乎</a>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="card-icon">📱</div>
+            <h3>微信</h3>
+            <img src="assets/qrcode.jpg" alt="微信二维码" class="qr-code">
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h2>给我留言</h2>
+          <form id="messageForm">
+            <div class="form-group">
+              <input type="text" placeholder="您的称呼" required>
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="您的邮箱" required>
+            </div>
+            <div class="form-group">
+              <textarea placeholder="留言内容..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">发送留言</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Copyright © 2024 冯锡航 & Made by <span>FengXihang</span></p>
+  </footer>
+
+  <script src="js/cursor.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/hearts.js"></script>
+</body>
+
+</html>

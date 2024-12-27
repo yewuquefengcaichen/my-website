@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>home - open-ch</title>
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/animations.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 时钟组件 -->
+  <div class="clock-widget">
+    <div class="clock-icon"></div>
+    <span>home</span>
+    <span class="subtitle">open-ch</span>
+  </div>
+
+  <!-- 自定义光标 -->
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
+
+  <!-- 背景 -->
+  <div class="bg-container">
+    <div class="bg-overlay"></div>
+    <div class="bg-slides">
+      <img src="assets/bg/wallpaper1.jpg" alt="背景图片" class="active">
+      <img src="assets/bg/wallpaper2.jpg" alt="背景图片">
+      <img src="assets/bg/wallpaper3.jpg" alt="背景图片">
+    </div>
+  </div>
+
+  <!-- 导航栏 -->
+  <nav class="main-nav">
+    <div class="nav-content">
+      <a href="index.html" class="nav-logo">首页</a>
+      <div class="nav-links">
+        <a href="index.html" class="active">�������页</a>
+        <a href="about.html">关于</a>
+        <a href="projects.html">项目</a>
+        <a href="blog.html">博客</a>
+        <a href="contact.html">联系</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容 -->
+  <main class="main-content fade-in-up">
+    <!-- 便签区域 -->
+    <div class="note-container">
+      <div class="note quote-note">
+        <blockquote>
+          "天不生我陈平安，剑道万古如长夜。"
+          <p>这一路走来，你若安好，便是晴天。</p>
+        </blockquote>
+      </div>
+
+      <div class="note quote-note">
+        <blockquote>
+          <p>为你，千千万万遍。</p>
+          <cite>- 「剑来」</cite>
+        </blockquote>
+      </div>
+
+      <div class="note quote-note">
+        <blockquote>
+          <p>小时了了，大未必佳。</p>
+          <cite>- 「剑来」</cite>
+        </blockquote>
+      </div>
+
+      <div class="note quote-note">
+        <blockquote>
+          <p>这世上从来没有什么岁月静好，只是有人在替你负重前行。</p>
+          <cite>- 「剑来」</cite>
+        </blockquote>
+      </div>
+
+      <div class="note quote-note">
+        <blockquote>
+          <p>不是非要一鸣惊人，只是不甘于平凡。</p>
+          <cite>- 「剑来」</cite>
+        </blockquote>
+      </div>
+
+      <div class="note quote-note">
+        <blockquote>
+          <p>我是一个读书人，读书人的事，能算偷么？</p>
+          <cite>- 「剑来」</cite>
+        </blockquote>
+      </div>
+
+      <div class="note quote-note">
+        <blockquote>
+          <p>天下风云出我辈，一入江湖岁月催。</p>
+          <cite>- 「剑来」</cite>
+        </blockquote>
+      </div>
+
+      <div class="note quote-note">
+        <blockquote>
+          <p>春秋多佳日，登高赋新诗。</p>
+          <cite>- 「剑来」</cite>
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- 社交链接 -->
+    <div class="social-links">
+      <a href="https://github.com" target="_blank" class="social-icon github"></a>
+      <a href="#" class="social-icon bilibili"></a>
+      <a href="#" class="social-icon email"></a>
+      <a href="#" class="social-icon discord"></a>
+    </div>
+
+    <!-- 导航卡片 -->
+    <div class="nav-cards">
+      <a href="#" class="nav-card link-card">
+        <div class="link-icon">
+          <img src="assets/icons/link.svg" alt="网站列表">
+        </div>
+        <span>网站列表</span>
+      </a>
+      <a href="#" class="nav-card music-card">
+        <div class="music-icon">
+          <img src="assets/icons/music.svg" alt="音乐">
+        </div>
+        <span>音乐</span>
+      </a>
+      <a href="#" class="nav-card chat-card">
+        <div class="chat-icon">
+          <img src="assets/icons/chat.svg" alt="OpenWebUI">
+        </div>
+        <span>OpenWebUI</span>
+      </a>
+      <a href="#" class="nav-card monitor-card">
+        <div class="monitor-icon">
+          <img src="assets/icons/monitor.svg" alt="站点监测">
+        </div>
+        <span>站点监测</span>
+      </a>
+    </div>
+
+    <!-- 时间和天气信息 -->
+    <div class="info-widget">
+      <div class="datetime">2024年 12月 26日 星期四 14:08:52</div>
+      <div class="weather">广州市 阴 19°C 北风 <3级< /div>
+      </div>
+  </main>
+
+  <footer class="footer">
+    <p>Copyright © 2024 冯锡航 & Made by <span>FengXihang</span></p>
+  </footer>
+
+  <script src="js/cursor.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/hearts.js"></script>
+  <script src="js/redPacket.js"></script>
+  <script src="js/music.js"></script>
+  <script src="js/snow.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/danmaku.js"></script>
+  <script src="js/clock.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/background.js"></script>
+  <script>
+    // 初始化倒计时
+    new NewYearCountdown();
+    // 初始化弹幕系统
+    new DanmakuSystem();
+    // 初始化时钟
+    new Clock();
+    // 初始化天气组件
+    new WeatherWidget();
+  </script>
+</body>
+
+</html>

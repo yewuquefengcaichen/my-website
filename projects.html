@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目 - 个人空间</title>
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/animations.css" rel="stylesheet">
+  <link href="css/projects.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 自定义光标 -->
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
+
+  <!-- 背景 -->
+  <div class="bg-container">
+    <div class="bg-overlay"></div>
+    <div class="bg-slides">
+      <img src="https://api.dujin.org/bing/1920.php" alt="背景图片">
+    </div>
+  </div>
+
+  <!-- 导航栏 -->
+  <nav class="main-nav">
+    <div class="nav-content">
+      <a href="index.html" class="nav-logo">首页</a>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="about.html">关于</a>
+        <a href="projects.html" class="active">项目</a>
+        <a href="blog.html">博客</a>
+        <a href="contact.html">联系</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容 -->
+  <main class="main-content">
+    <div class="projects-container">
+      <h1 class="page-title">我的项目</h1>
+
+      <!-- 项目分类 -->
+      <div class="project-filters">
+        <button class="filter-btn active" data-filter="all">全部</button>
+        <button class="filter-btn" data-filter="web">Web开发</button>
+        <button class="filter-btn" data-filter="app">App开发</button>
+        <button class="filter-btn" data-filter="other">其他项目</button>
+      </div>
+
+      <!-- 项目网格 -->
+      <div class="projects-grid">
+        <!-- 项目卡片 1 -->
+        <div class="project-card" data-category="web">
+          <div class="project-image">
+            <img src="assets/projects/blog-system.jpg" alt="博客系统">
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="https://blog.example.com" class="project-link">预览</a>
+                <a href="https://github.com/username/blog" class="project-link">源码</a>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>个人博客系统</h3>
+            <p>使用React和Node.js开发的现代化博客系统，支持Markdown编辑、代码高亮、评论系统等功能</p>
+            <div class="project-tags">
+              <span>React</span>
+              <span>Node.js</span>
+              <span>MongoDB</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 项目卡片 2 -->
+        <div class="project-card" data-category="app">
+          <div class="project-image">
+            <img src="assets/projects/todo-app.jpg" alt="待办事项应用">
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="https://todo.example.com" class="project-link">预览</a>
+                <a href="https://github.com/username/todo" class="project-link">源码</a>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>智能待办事项</h3>
+            <p>基于Vue3和TypeScript开发的待办事项应用，支持任务分类、提醒、数据统计等功能</p>
+            <div class="project-tags">
+              <span>Vue3</span>
+              <span>TypeScript</span>
+              <span>Vite</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 项目卡片 3 -->
+        <div class="project-card" data-category="other">
+          <div class="project-image">
+            <img src="assets/projects/data-vis.jpg" alt="数据可视化">
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="https://vis.example.com" class="project-link">预览</a>
+                <a href="https://github.com/username/vis" class="project-link">源码</a>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>数据可视化平台</h3>
+            <p>使用D3.js和ECharts开发的数据可视化平台，支持多种图表类型和实时数据更新</p>
+            <div class="project-tags">
+              <span>D3.js</span>
+              <span>ECharts</span>
+              <span>SVG</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Copyright © 2024 冯锡航 & Made by <span>FengXihang</span></p>
+  </footer>
+
+  <script src="js/cursor.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/hearts.js"></script>
+  <script src="js/projects.js"></script>
+</body>
+
+</html>
